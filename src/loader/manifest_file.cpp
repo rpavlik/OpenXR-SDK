@@ -48,6 +48,9 @@
 #include <utility>
 #include <vector>
 
+// DO NOT EDIT THE FOLLOWING COMMENT:
+// source-merger-content-start
+
 // OpenXR paths and registry key locations
 #define OPENXR_RELATIVE_PATH "openxr/"
 #define OPENXR_IMPLICIT_API_LAYER_RELATIVE_PATH "/api_layers/implicit.d"
@@ -61,6 +64,18 @@
 // OpenXR Loader environment variables of interest
 #define OPENXR_RUNTIME_JSON_ENV_VAR "XR_RUNTIME_JSON"
 #define OPENXR_API_LAYER_PATH_ENV_VAR "XR_API_LAYER_PATH"
+
+#ifndef FALLBACK_CONFIG_DIRS
+#define FALLBACK_CONFIG_DIRS "/etc/xdg"
+#endif  // !FALLBACK_CONFIG_DIRS
+
+#ifndef FALLBACK_DATA_DIRS
+#define FALLBACK_DATA_DIRS "/usr/local/share:/usr/share"
+#endif  // !FALLBACK_DATA_DIRS
+
+#ifndef SYSCONFDIR
+#define SYSCONFDIR "/etc"
+#endif // !SYSCONFDIR
 
 #ifndef XRLOADER_ENABLE_EXCEPTION_HANDLING
 #if JSON_USE_EXCEPTIONS

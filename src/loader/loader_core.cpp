@@ -42,6 +42,9 @@
 #include <utility>
 #include <vector>
 
+// DO NOT EDIT THE FOLLOWING COMMENT:
+// source-merger-content-start
+
 // Flag to cause the one time to init to only occur one time.
 std::once_flag g_one_time_init_flag;
 
@@ -62,8 +65,6 @@ inline bool IsMissingNullTerminator(const char (&str)[max_length]) {
     }
     return true;
 }
-
-extern "C" {
 
 // ---- Core 1.0 manual loader trampoline functions
 
@@ -645,5 +646,3 @@ XRAPI_ATTR XrResult XRAPI_CALL xrSessionInsertDebugUtilsLabelEXT(XrSession sessi
     return XR_SUCCESS;
 }
 XRLOADER_ABI_CATCH_FALLBACK
-
-}  // extern "C"
