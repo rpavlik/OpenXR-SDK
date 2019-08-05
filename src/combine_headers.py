@@ -95,12 +95,16 @@ class LoaderMerger(HeaderMergerBase):
         self.header_filenames = set((fn.name for fn in self.header_files))
         self.known_filenames = set((fn.name for fn in self.header_files))
 
-        # self.known_filenames.add('json/json.h')
         super().__init__()
 
         # Skip common_config.h: make it an empty file
         self.known_filenames.add('common_config.h')
         self.add_file('common_config.h')
+
+        if JSONCPP_SOURCE.exists():
+            self.known_filenames.add(JSONCPP_SOURCE.name)
+        if JSONCPP_HEADER.exists():
+            self.known_filenames.add('json/json.h')
 
     def get_external_include_from_match(self, match):
         """Identify external includes by checking if this file is in our group of files to merge."""
@@ -121,6 +125,9 @@ class LoaderMerger(HeaderMergerBase):
                         '#define MATH_PI 3.14159265358979323846f',
                         # for xr_generated_loader.cpp
                         '// Unordered maps to lookup the instance for a given object type',
+                        # jsoncpp
+                        '#ifndef JSON_IS_AMALGAMATION',
+                        '#ifndef JSON_AMALGATED_H_INCLUDED',
                         )
 
     def is_start_marker(self, line):
@@ -146,7 +153,11 @@ class LoaderMerger(HeaderMergerBase):
         return self.get_union_of_attribute_of('copyrights', names)
 
     def parse_all(self):
-        # self.parse_file(JSONCPP_HEADER, 'json/json.h')
+        if JSONCPP_SOURCE.exists():
+            self.parse_file(JSONCPP_SOURCE)
+        if JSONCPP_HEADER.exists():
+            self.parse_file(JSONCPP_HEADER, 'json/json.h')
+        
         self.parse_files(self.header_files)
         self.parse_files(LOADER_SPECIFIC_SOURCES)
         self.parse_files(COMMON_SOURCES)
